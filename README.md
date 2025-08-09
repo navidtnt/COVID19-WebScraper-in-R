@@ -1,15 +1,22 @@
-# 🌐 COVID19-WebScraper-in-R
+# 🌐 COVID-19 Testing Data Web Scraping with R
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 [![R Version](https://img.shields.io/badge/R-%3E%3D%204.0.0-blue.svg)](https://cran.r-project.org/)  
 [![Made with R](https://img.shields.io/badge/Made%20with-R-blue?logo=r&logoColor=white)](https://www.r-project.org/)
 
 ---
+## ▶️ Run the Project in Google Colab
 
-## 📖 Introduction
+You can run this project directly in your browser without installing anything:  
 
-This project demonstrates **web scraping** in R to extract **global COVID-19 case data** from Wikipedia.  
-The scraped data is **cleaned, saved to CSV, and visualized** using bar charts for quick interpretation.  
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EiVVzT1aP3byMNzeBsrVWF4W0-F65oI_#scrollTo=MKqpwKKPP51H)
+
+---
+## 📖 Project Overview
+
+This project demonstrates how to scrape and analyze COVID-19 testing data by extracting it from a Wikipedia template page using R. The workflow involves sending HTTP requests to retrieve the webpage, parsing the HTML content to extract the relevant data table, cleaning and preprocessing the data, and performing simple exploratory analyses. The final dataset is saved as a CSV file for further use.
+
+The goal is to showcase practical skills in web scraping using R packages (httr, rvest), data manipulation (tidyverse), and basic data analysis. 
 
 **Why this project?**  
 In the era of big data, being able to automatically extract, process, and visualize information from the web is an essential skill for data scientists and analysts.
@@ -33,7 +40,14 @@ In the era of big data, being able to automatically extract, process, and visual
 ✔ Generates a bar chart for visual insights  
 
 ---
+## Code Structure
+- Task 1: Send an HTTP GET request to Wikipedia to retrieve the COVID-19 testing data page.
+- Task 2: Parse the HTML response and extract the second table containing the testing data.
+- Task 3: Clean and preprocess the extracted data (remove unnecessary rows and columns, convert data types).
+- Task 4: Export the cleaned data to a CSV file and read it back for analysis.
+- Task 5-10: Perform basic data explorations, including filtering rows, calculating global statistics, sorting countries, pattern matching country names, comparing selected countries, and filtering by thresholds.
 
+---
 ## 📷 Preview Output
 
 **Example Visualization**:  
@@ -94,12 +108,6 @@ In the era of big data, being able to automatically extract, process, and visual
 
 ---
 
-
-## ▶️ Run the Project in Google Colab
-
-You can run this project directly in your browser without installing anything:  
-
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EiVVzT1aP3byMNzeBsrVWF4W0-F65oI_#scrollTo=MKqpwKKPP51H)
 
 
 
@@ -165,10 +173,12 @@ The project directory contains the following files:
 - **README.md** – This documentation file, explaining the project, installation, and usage.  
 
 
-## 🔮 Future Improvements
-- Scrape multiple data tables (e.g., deaths, vaccination rates)
-- Automate daily updates and store data historically
-- Deploy as an interactive dashboard with Shiny
+## 🔮Limitations and Future Work
+- The Wikipedia page structure may change over time, which can break the table extraction step.
+- The dataset is static and represents a snapshot at the time of scraping; updating the data regularly requires re-running the script.
+- Future improvements could include automating periodic data retrieval, visualizing trends, or integrating additional data sources for richer analysis.
+
+
 
 🙏 Credits
 Data source: Wikipedia – List of countries by COVID-19 cases
