@@ -44,16 +44,46 @@ In the era of big data, being able to automatically extract, process, and visual
 
 ## 📋 Example Output Data
 
-| Country       | Date         | Tested   | Confirmed | Confirmed/Population Ratio (%) |
-|---------------|--------------|----------|-----------|-------------------------------|
-| Afghanistan   | 17 Dec 2020  | 154,767  | 49,621    | 0.13                          |
-| Algeria       | 2 Nov 2020   | 230,553  | 58,574    | 0.13                          |
-| Angola        | 2 Feb 2021   | 399,228  | 20,981    | 0.067                         |
-| Antigua and Barbuda | 6 Mar 2021 | 15,268 | 832       | 0.86                          |
-| Bangladesh    | 24 Jul 2021  | 7,417,714| 1,151,644 | 0.7                           |
+### Sample Extracted Data from the COVID-19 Table on Wikipedia **TASK 2**
+
+
+| Country or region | Date         | Tested      | Confirmed(cases) | Confirmed/tested,% |
+|-------------------|--------------|-------------|------------------|--------------------|
+| Afghanistan       | 17 Dec 2020  | 154,767     | 49,621           | 32.1               |
+| Albania           | 18 Feb 2021  | 428,654     | 96,838           | 22.6               |
+| Algeria           | 2 Nov 2020   | 230,553     | 58,574           | 25.4               |
+| Andorra           | 23 Feb 2022  | 300,307     | 37,958           | 12.6               |
+| Angola            | 2 Feb 2021   | 399,228     | 20,981           | 5.3                |
+| Antigua and Barbuda| 6 Mar 2021   | 15,268      | 832              | 5.4                |
+| Argentina         | 16 Apr 2022  | 35,716,069  | 9,060,495        | 25.4               |
+| Armenia           | 29 May 2022  | 3,099,602   | 422,963          | 13.6               |
+| Australia         | 9 Sep 2022   | 78,548,492  | 10,112,229       | 12.9               |
+| Austria           | 1 Feb 2023   | 205,817,752 | 5,789,991        | 2.8                |
 
 
 *(Values above are just sample data — actual values come from Wikipedia.)*
+
+
+### Summary of COVID-19 Testing and Confirmed Cases by Country **TASK 3**
+| Country               | Date         | Tested  | Confirmed | Confirmed/Tested (%) | Tested/Population (%) | Confirmed/Population (%) |
+|-----------------------|--------------|---------|-----------|---------------------|----------------------|-------------------------|
+| Afghanistan           | 17 Dec 2020  | 154,767 | 49,621    | 32.1                | 0.40                 | 0.13                    |
+| Albania               | 18 Feb 2021  | 428,654 | 96,838    | 22.6                | 15.00                | 3.40                    |
+| Algeria               | 2 Nov 2020   | 230,553 | 58,574    | 25.4                | 0.53                 | 0.13                    |
+| Andorra               | 23 Feb 2022  | 300,307 | 37,958    | 12.6                | 387.00               | 49.00                   |
+| Angola                | 2 Feb 2021   | 399,228 | 20,981    | 5.3                 | 1.30                 | 0.067                   |
+| Antigua and Barbuda   | 6 Mar 2021   | 15,268  | 832       | 5.4                 | 15.90                | 0.86                    |
+
+
+### Worldwide COVID-19 Testing Summary
+
+| Metric                 | Value           |
+|------------------------|-----------------|
+| Total Confirmed Cases  | 431,434,555     |
+| Total Tested Cases     | 5,396,881,644   |
+| Positive Ratio         | 0.07994 (7.99%) |
+
+
 
 ---
 
