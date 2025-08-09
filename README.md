@@ -44,12 +44,14 @@ In the era of big data, being able to automatically extract, process, and visual
 
 ## 📋 Example Output Data
 
-| Country     | Cases       |
-|-------------|------------|
-| USA         | 103,456,789|
-| India       | 45,678,123 |
-| Brazil      | 34,567,890 |
-| France      | 29,345,678 |
+| Country       | Date         | Tested   | Confirmed | Confirmed/Population Ratio (%) |
+|---------------|--------------|----------|-----------|-------------------------------|
+| Afghanistan   | 17 Dec 2020  | 154,767  | 49,621    | 0.13                          |
+| Algeria       | 2 Nov 2020   | 230,553  | 58,574    | 0.13                          |
+| Angola        | 2 Feb 2021   | 399,228  | 20,981    | 0.067                         |
+| Antigua and Barbuda | 6 Mar 2021 | 15,268 | 832       | 0.86                          |
+| Bangladesh    | 24 Jul 2021  | 7,417,714| 1,151,644 | 0.7                           |
+
 
 *(Values above are just sample data — actual values come from Wikipedia.)*
 
@@ -59,7 +61,8 @@ In the era of big data, being able to automatically extract, process, and visual
 ## ▶️ Run the Project in Google Colab
 
 You can run this project directly in your browser without installing anything:  
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](YOUR_COLAB_NOTEBOOK_LINK)
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EiVVzT1aP3byMNzeBsrVWF4W0-F65oI_#scrollTo=MKqpwKKPP51H)
 
 
 
