@@ -80,7 +80,58 @@ Explore the COVID-19 testing data through insightful visualizations created with
 
 ![Histogram](image_003.png)
 
+---
 
+### 4️⃣ Top 5 Countries Confirmed Cases Share (Global)
+
+- A pie chart illustrating the percentage share of confirmed COVID-19 cases among the top 5 countries globally.
+- This visualization highlights how the confirmed cases are distributed, showing which countries bear the largest burden of detected infections.
+
+
+![Pie Chart](image_004.png)
+
+---
+
+### 5️⃣ Cumulative Distribution of Tested Population Ratio
+
+- A CDF (Cumulative Distribution Function) plot that shows the cumulative probability distribution of the tested population ratio across countries.
+- It helps understand the overall testing coverage worldwide and identifies the proportion of countries that have tested a certain percentage of their populations or more.
+
+![CDF Plot](image_005.png)
+
+---
+
+### 6️⃣ Heatmap of Confirmed to Tested Ratio by Country
+
+- A heatmap presenting the confirmed-to-tested ratio for all countries, with a color gradient from blue (low) to red (high).
+- This chart makes it easy to spot countries with high positivity rates and possible under-testing or outbreaks.
+
+![Heatmap](image_006.png)
+
+### 7️⃣ Top 20 Countries by Confirmed to Tested Ratio
+
+- A focused heatmap on the top 20 countries with the highest confirmed/tested ratios.
+- This visualization zooms in on countries with the largest share of positive tests, indicating potential hotspots or testing issues.
+
+![Heatmap2](image_007.png)
+
+---
+
+### 8️⃣ Boxplot of Confirmed/Tested Ratio by Continent
+
+- A boxplot comparing the distribution of confirmed/tested ratios across different continents.
+- It reveals regional differences in test positivity rates, allowing comparison of COVID-19 impact and testing strategies worldwide.
+
+![Boxplot](image_008.png)
+
+---
+
+### 9️⃣ Daily COVID-19 Tests Over Time
+
+- A time series line plot showing daily COVID-19 testing counts over 30 days (sample data).
+- This plot helps track testing trends, increases, or decreases over time to assess the pandemic response dynamics.
+
+![Time Series Plot](image_009.png)
 
 These visualizations offer valuable perspectives on the pandemic's testing landscape worldwide and help interpret the data beyond raw numbers.
 
