@@ -1,19 +1,20 @@
+# --- Libraries requirements ---
+library(tidyverse)  # For data manipulation and visualization (dplyr, ggplot2, etc.)
+library(httr)       # For sending HTTP requests
+library(rvest)      # For extracting data from HTML pages
+
 #TASK 1: Get a COVID-19 pandemic Wiki page using HTTP request
 
-library(tidyverse)
-library(httr)
-library(rvest)
-
 get_wiki_covid19_page <- function() {
-  
+
   # Wiki page base
   wiki_base_url <-  "https://en.wikipedia.org/w/index.php"
   wiki_params <- list(title = "Template:COVID-19_testing_by_country")
-  
-  
+
+
   # - Use the `GET` function in httr library with a `url` argument and a `query` arugment to get a HTTP response
-  wiki_response <- GET(wiki_base_url, query = wiki_params) 
-  
+  wiki_response <- GET(wiki_base_url, query = wiki_params)
+
   # Use the `return` function to return the response
   return(wiki_response)
 }
@@ -24,7 +25,7 @@ wiki_covid19_response <- get_wiki_covid19_page()
 print(wiki_covid19_response)
 
 #TASK 2: Extract COVID-19 testing data table from the wiki HTML page
-# Get the root html node from the http response in task 1 
+# Get the root html node from the http response in task 1
 wiki_covid19_page_root_node <- read_html(wiki_covid19_response)
 # Get all table nodes in the root HTML node
 wiki_covid19_page_table_nodes <- html_nodes(wiki_covid19_page_root_node, "table")
@@ -35,27 +36,26 @@ desired_table_df <- as.data.frame(html_table(desired_table_node))
 desired_table_df
 
 
-
 #TASK 3: Pre-process and export the extracted data frame
 # Print the summary of the data frame
 summary(desired_table_df)
 
 preprocess_covid_data_frame <- function(data_frame) {
-  
+
   shape <- dim(data_frame)
-  
+
   # Remove the World row
   data_frame<-data_frame[!(data_frame$`Country or region`=="World"),]
   # Remove the last row
   data_frame <- data_frame[1:172, ]
-  
+
   # We dont need the Units and Ref columns, so can be removed
   data_frame["Ref."] <- NULL
   data_frame["Units[b]"] <- NULL
-  
+
   # Renaming the columns
   names(data_frame) <- c("country", "date", "tested", "confirmed", "confirmed.tested.ratio", "tested.population.ratio", "confirmed.population.ratio")
-  
+
   # Convert column data types
   data_frame$country <- as.factor(data_frame$country)
   data_frame$date <- as.factor(data_frame$date)
@@ -64,7 +64,7 @@ preprocess_covid_data_frame <- function(data_frame) {
   data_frame$'confirmed.tested.ratio' <- as.numeric(gsub(",","",data_frame$`confirmed.tested.ratio`))
   data_frame$'tested.population.ratio' <- as.numeric(gsub(",","",data_frame$`tested.population.ratio`))
   data_frame$'confirmed.population.ratio' <- as.numeric(gsub(",","",data_frame$`confirmed.population.ratio`))
-  
+
   return(data_frame)
 }
 
@@ -79,7 +79,8 @@ summary(new_covid_data_frame)
 write.csv(new_covid_data_frame, "covid19.csv")
 
 
-#Task 4: Get a subset of the COVID-19 data frame (2 pts) 
+
+#Task 4: Get a subset of the COVID-19 data frame (2 pts)
 
 # Read covid_data_frame_csv from the csv file
 covid_data_frame_csv <- read.csv("covid19.csv", header=TRUE, sep=",")
@@ -89,19 +90,24 @@ covid_data_frame_row <- covid_data_frame_csv %>% select(country, tested, confirm
 covid_data_frame_row[c(5:10), ]
 
 #Task 5: Calculate worldwide COVID-19 testing positive ratio (2 pts)
-
-# Get the total confirmed cases worldwide
+# Calculate the total confirmed cases worldwide
 total_confirmed_cases <- sum(covid_data_frame_csv$confirmed)
-print(paste("total_confirmed_cases:", total_confirmed_cases))
 
-# Get the total tested cases worldwide
+# Calculate the total tested cases worldwide
 total_tested_cases <- sum(covid_data_frame_csv$tested)
-print(paste("total_tested_cases:", total_tested_cases))
 
-
-# Get the positive ratio (confirmed / tested)
+# Calculate the positive ratio (confirmed / tested)
 positive_ratio <- total_confirmed_cases / total_tested_cases
-print(paste("positive_ratio:", positive_ratio))
+
+# Create a summary table
+summary_table <- data.frame(
+  Metric = c("Total Confirmed Cases", "Total Tested Cases", "Positive Ratio"),
+  Value = c(total_confirmed_cases, total_tested_cases, round(positive_ratio, 5))
+)
+
+# Print the summary table
+print(summary_table)
+
 
 #Task 6: Get a sorted name list of countries that reported their testing data (2 pts)
 
@@ -122,6 +128,7 @@ sort(covid_data_frame_csv$country, decreasing = TRUE)
 # Print the sorted ZtoA list
 sort(covid_data_frame_csv$country, decreasing = TRUE)
 
+
 #Task 7: Identify countries names with a specific pattern (2 pts)
 
 # Use a regular expression `United.+` to find matches
@@ -133,7 +140,7 @@ covid_data_frame_csv$country[matched_country]
 #Task 8: Pick two countries you are interested in, and then review their testing data (2 pts)
 
 #selected country name and columns
-covid_data_frame_italy <- covid_data_frame_csv %>% select(country, confirmed, confirmed.population.ratio) %>% 
+covid_data_frame_italy <- covid_data_frame_csv %>% select(country, confirmed, confirmed.population.ratio) %>%
   filter(country == "Italy")
 
 #selected country name and columns
@@ -142,6 +149,7 @@ covid_data_frame_Netherlands <- covid_data_frame_csv %>% select(country, confirm
 
 covid_data_frame_italy
 covid_data_frame_Netherlands
+
 
 #Task 9: Compare which one of the selected countries has a larger ratio of confirmed cases to population (2 pts)
 
@@ -153,10 +161,8 @@ if (covid_data_frame_italy$confirmed.population > covid_data_frame_Netherlands$c
 }
 
 
+
 #Task 10: Filter countries with confirmed-to-population ratio rate less than a threshold (2 pts)
 
 # a subset of countries with `confirmed.population.ratio` less than the threshold 1%
 subset(covid_data_frame_csv, subset = confirmed.population.ratio < 1)
-
-
-
