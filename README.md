@@ -1,4 +1,4 @@
-# 🌐 Webscraping-By-R
+# 🌐 COVID19-WebScraper-in-R
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 [![R Version](https://img.shields.io/badge/R-%3E%3D%204.0.0-blue.svg)](https://cran.r-project.org/)  
@@ -37,8 +37,15 @@ In the era of big data, being able to automatically extract, process, and visual
 ## 📷 Preview Output
 
 **Example Visualization**:  
-![COVID-19 Chart Preview](assets/preview_chart.png)  
-*(Replace this image with your actual plot output)*  
+
+**Comparison of COVID-19 Tested and Confirmed Cases in the Top 10 Testing Countries**
+![Comparison of COVID-19 Tested and Confirmed Cases in the Top 10 Testing Countries](image_001.png)
+
+**Relationship Between Testing Coverage and Confirmed Case Rates Across Countries**
+![Relationship Between Testing Coverage and Confirmed Case Rates Across Countries](image_002.png)
+
+**Distribution of COVID-19 Positive Test Ratios Across Countries Worldwide**
+![Distribution of COVID-19 Positive Test Ratios Across Countries Worldwide](image_003.png)
 
 ---
 
