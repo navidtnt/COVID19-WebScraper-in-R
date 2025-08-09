@@ -48,22 +48,47 @@ In the era of big data, being able to automatically extract, process, and visual
 - Task 5-10: Perform basic data explorations, including filtering rows, calculating global statistics, sorting countries, pattern matching country names, comparing selected countries, and filtering by thresholds.
 
 ---
-## 📷 Preview Output
+## 📊 Data Visualization
 
-**Example Visualization**:  
+Explore the COVID-19 testing data through insightful visualizations created with `ggplot2`:
 
-**Comparison of COVID-19 Tested and Confirmed Cases in the Top 10 Testing Countries**
-![Comparison of COVID-19 Tested and Confirmed Cases in the Top 10 Testing Countries](image_001.png)
+### 1️⃣ Top 10 Countries: Tested vs Confirmed Cases
 
-**Relationship Between Testing Coverage and Confirmed Case Rates Across Countries**
-![Relationship Between Testing Coverage and Confirmed Case Rates Across Countries](image_002.png)
+- We selected the **top 10 countries** based on the number of COVID-19 tests conducted.
+- For each country, the **tested** and **confirmed** case counts are displayed side-by-side for easy comparison.
+- This grouped bar chart reveals testing efforts vs actual confirmed cases in the most tested countries.
 
-**Distribution of COVID-19 Positive Test Ratios Across Countries Worldwide**
-![Distribution of COVID-19 Positive Test Ratios Across Countries Worldwide](image_003.png)
+![Bar Plot](image_001.png)
 
 ---
 
-## 📋 Example Output Data
+### 2️⃣ Confirmed-to-Population Ratio vs Tested-to-Population Ratio
+
+- A scatter plot showing the **relationship between testing coverage and confirmed cases per 100 people**.
+- Each point represents a country, illustrating how widely testing was performed and how many cases were detected relative to the population.
+- Helps identify countries with high testing but low positivity, or vice versa.
+
+![Scatter Plot](image_002.png)
+
+---
+
+### 3️⃣ Distribution of Positive Test Ratios
+
+- A histogram visualizing the **distribution of confirmed-to-tested ratios (%)** across countries.
+- Provides insight into the global variation of COVID-19 test positivity rates.
+- Highlights countries with unusually high or low positivity rates.
+
+![Histogram](image_003.png)
+
+
+
+These visualizations offer valuable perspectives on the pandemic's testing landscape worldwide and help interpret the data beyond raw numbers.
+
+
+
+---
+
+## 📋 Example Output Tables
 
 ### Sample Extracted Data from the COVID-19 Table on Wikipedia **TASK 2**
 
@@ -112,55 +137,107 @@ In the era of big data, being able to automatically extract, process, and visual
 
 
 ## ⚙️ How to Run
-1. Load the libraries
+1. Load the required libraries:
 
 ```r
-library(rvest)
-library(dplyr)
-library(ggplot2)
+library(tidyverse)  # for data manipulation and visualization
+library(httr)       # for HTTP requests
+library(rvest)      # for scraping HTML data
+library(ggplot2)    # for plotting
+
 ```
-2. Read the Wikipedia page
+2. Download the COVID-19 testing data from Wikipedia
    
 ```r
-url <- "https://en.wikipedia.org/wiki/List_of_countries_by_COVID-19_cases"
-page <- read_html(url)
+wiki_base_url <- "https://en.wikipedia.org/w/index.php"
+wiki_params <- list(title = "Template:COVID-19_testing_by_country")
+wiki_response <- httr::GET(wiki_base_url, query = wiki_params)
+
 
 ```
   
-3. Extract the data table
+3. Extract the testing data table from the downloaded HTML
 
 ```r
-table <- page %>% html_node("table") %>% html_table(fill = TRUE)
+wiki_page <- read_html(wiki_response)
+tables <- html_nodes(wiki_page, "table")
+covid_table <- html_table(tables[[2]], fill = TRUE)
+
 ```
 
-4. Clean and save the data
+4. Clean and preprocess the data
 
 ```r
-covid_data <- table %>%
-  select(Country = 1, Cases = 2) %>%
-  filter(!is.na(Cases)) %>%
-  mutate(Cases = as.numeric(gsub(",", "", Cases)))
+covid_data <- covid_table %>%
+  filter(`Country or region` != "World") %>%
+  slice(1:172) %>%
+  select(-`Ref.`, -`Units[b]`) %>%
+  rename(
+    country = `Country or region`,
+    date = `Date`,
+    tested = `Tested`,
+    confirmed = `Confirmed`,
+    confirmed_tested_ratio = `Confirmed/Tested ratio`,
+    tested_population_ratio = `Tested/population ratio`,
+    confirmed_population_ratio = `Confirmed/population ratio`
+  ) %>%
+  mutate(
+    tested = as.numeric(gsub(",", "", tested)),
+    confirmed = as.numeric(gsub(",", "", confirmed)),
+    confirmed_tested_ratio = as.numeric(gsub(",", "", confirmed_tested_ratio)),
+    tested_population_ratio = as.numeric(gsub(",", "", tested_population_ratio)),
+    confirmed_population_ratio = as.numeric(gsub(",", "", confirmed_population_ratio))
+  )
 
+
+```
+
+5. Save the cleaned data as CSV
+   
+```r
 write.csv(covid_data, "covid19.csv", row.names = FALSE)
 
 ```
+6. Visualize the data (example plots)
 
-5. Visualize the data
-   
+Top 10 countries by number of tests vs confirmed cases:
 ```r
-ggplot(covid_data, aes(x = reorder(Country, -Cases), y = Cases)) +
-  geom_bar(stat = "identity", fill = "#0073C2FF") +
-  coord_flip() +
-  labs(
-    title = "COVID-19 Cases by Country",
-    x = "Country",
-    y = "Number of Cases"
-  ) +
+top_countries <- covid_data %>%
+  arrange(desc(tested)) %>%
+  head(10) %>%
+  select(country, tested, confirmed) %>%
+  pivot_longer(cols = c(tested, confirmed), names_to = "Metric", values_to = "Count")
+
+ggplot(top_countries, aes(x = reorder(country, -Count), y = Count, fill = Metric)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Top 10 Countries: Tested vs Confirmed COVID-19 Cases",
+       x = "Country", y = "Number of Cases") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+Scatter plot of confirmed vs tested ratio per population:
+```r
+ggplot(covid_data, aes(x = tested_population_ratio, y = confirmed_population_ratio)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  labs(title = "COVID-19 Confirmed vs Tested Ratio by Population",
+       x = "Tested per 100 people",
+       y = "Confirmed per 100 people") +
   theme_minimal()
 
 
 ```
+Histogram of confirmed/tested ratios:
+```r
+ggplot(covid_data, aes(x = confirmed_tested_ratio)) +
+  geom_histogram(binwidth = 5, fill = "steelblue", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Confirmed/Tested Ratios Across Countries",
+       x = "Confirmed / Tested (%)",
+       y = "Number of Countries") +
+  theme_minimal()
 
+
+```
 ## 📂 Project Structure
 
 The project directory contains the following files:
