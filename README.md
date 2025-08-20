@@ -305,9 +305,7 @@ The project directory contains the following files:
 - The Wikipedia page structure may change over time, which can break the table extraction step.
 - The dataset is static and represents a snapshot at the time of scraping; updating the data regularly requires re-running the script.
 - Future improvements could include automating periodic data retrieval, visualizing trends, or integrating additional data sources for richer analysis.
--
--
-- Author: Navid
+
 
 
 🙏 Credits
